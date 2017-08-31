@@ -22,28 +22,27 @@ public class FtpToJMSWithProcessorExample {
         CamelContext context = new DefaultCamelContext();
         
         // connect to embedded ActiveMQ JMS broker
-        ConnectionFactory connectionFactory = 
-            new ActiveMQConnectionFactory("vm://localhost");
-        context.addComponent("jms",
-            JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+        String url = "tcp://localhost:61616";
+        ConnectionFactory connectionFactory =  new ActiveMQConnectionFactory(url);
+        context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
         // add our route to the CamelContext
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
-                from("ftp://rider.com/orders?username=rider&password=secret").
-                process(new Processor() {                    
+                from("ftp://localhost/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT/orders?username=glocon&password=Pippo3791&stepwise=false") 
+                .process(new Processor() {                    
                     public void process(Exchange exchange) throws Exception {
                         System.out.println("We just downloaded: " + exchange.getIn().getHeader("CamelFileName"));
                     }
-                }).
-                to("jms:incomingOrders");
+                })
+                .to("jms:queue:incomingOrders");
             }
         });
 
         // start the route and let it do its work
         context.start();
-        Thread.sleep(10000);
+        Thread.sleep(100000);
 
         // stop the CamelContext
         context.stop();

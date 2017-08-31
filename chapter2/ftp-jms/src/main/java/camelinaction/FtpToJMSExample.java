@@ -20,16 +20,20 @@ public class FtpToJMSExample {
         CamelContext context = new DefaultCamelContext();
         
         // connect to embedded ActiveMQ JMS broker
-        ConnectionFactory connectionFactory = 
-            new ActiveMQConnectionFactory("vm://localhost");
-        context.addComponent("jms",
-            JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+        String url = "tcp://localhost:61616";
+        ConnectionFactory connectionFactory =  new ActiveMQConnectionFactory(url);//<artifactId>activemq-all</artifactId>
+        
+        //JmsComponent e' aggiunto al context per abilitare endpoints tipo "jms:xyz"        
+        context.addComponent("jms",JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));//<artifactId>camel-jms</artifactId>
 
-        // add our route to the CamelContext
+
+        
+        // add our route to the CamelContext : prende files da ftp://rider.com/orders e li mette in jms queue incomingOrders nel local ActiveMQ
         context.addRoutes(new RouteBuilder() {
             @Override
-            public void configure() {
-                from("ftp://rider.com/orders?username=rider&password=secret").to("jms:incomingOrders");
+            public void configure() {      
+            	//"jms" indica l uso del cpmponent JmsComponent creato e aggiunto al context su
+                from("ftp://localhost/Users/glocon/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT/orders?username=glocon&password=Pippo3792#").  to("jms:queue:incomingOrders");//<artifactId>camel-ftp</artifactId> per gestire ftp endpoints
             }
         });
 

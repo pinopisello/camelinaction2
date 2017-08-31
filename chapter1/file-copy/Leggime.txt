@@ -1,0 +1,5 @@
+Copia file message1.xml da data/inbox/message1.xml a data/outbox/message1.xml
+
+  mvn compile exec:java
+  
+ Esegue FileCopierWithCamel.java 

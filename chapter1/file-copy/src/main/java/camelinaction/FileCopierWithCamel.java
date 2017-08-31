@@ -13,7 +13,8 @@ public class FileCopierWithCamel {
         // add our route to the CamelContext
         context.addRoutes(new RouteBuilder() {
             public void configure() {
-                from("file:data/inbox?noop=true").to("file:data/outbox");
+                from("file:data/inbox?noop=true")  //noop evita che data/inbox/message1.xml sia cancellato
+                .to("file:data/outbox");
             }
         });
 

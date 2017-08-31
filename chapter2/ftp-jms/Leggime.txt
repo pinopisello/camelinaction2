@@ -1,0 +1,32 @@
+FtpToJMSExample.java           => Connette a ftp://localhost/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT/orders, prende i files e li invia a jms:incomingOrders che e' Activemq in ascolto porta .
+FtpToJMSWithProcessorExample   => come FtpToJMSExample ma  con un Processor che intercetta l Exchange prima che il jms sia inviato a ActiveMq
+
+
+Per vedere le opzioni dei components usati vedi:
+
+ftp => http://camel.apache.org/ftp.html
+
+jms => http://camel.apache.org/jms.html
+
+Per vedere messaggi pubblicati in ActiveMQ , connetti a http://localhost:8161/admin/ [admin,admin]
+Per startare ftp server usa 'startftp'
+
+Per startare Activemq (installato in /Users/glocon/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT ) lancia 'startmq'
+I protoclli/porte attivati sono indicati sotto:
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="mqtt" uri="mqtt://0.0.0.0:1883?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="ws" uri="ws://0.0.0.0:61614?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+
+
+Per startare local ftp:
+  startftp
+  stopftp
+  
+  
+
+   
+
+
+
