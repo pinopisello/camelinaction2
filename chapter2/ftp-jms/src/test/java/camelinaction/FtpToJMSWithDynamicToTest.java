@@ -4,10 +4,9 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
+import org.apache.camel.spi.Registry;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
@@ -18,11 +17,10 @@ public class FtpToJMSWithDynamicToTest extends CamelTestSupport {
         // create CamelContext
         CamelContext camelContext = super.createCamelContext();
         
+        Registry contextRegistry =  camelContext.getRegistry();
         // connect to embedded ActiveMQ JMS broker
-        ConnectionFactory connectionFactory = 
-            new ActiveMQConnectionFactory("vm://localhost");
-        camelContext.addComponent("jms",
-            JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+        ConnectionFactory connectionFactory =  new ActiveMQConnectionFactory("tcp://localhost:61616");
+        camelContext.addComponent("jms",     JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
         
         return camelContext;
     }
@@ -45,7 +43,7 @@ public class FtpToJMSWithDynamicToTest extends CamelTestSupport {
                        
                 // test that our route is working
                 from("jms:incomingOrders")
-                    .to("mock:incomingOrders");                
+                .to("mock:incomingOrders");                
             }
         };
     }

@@ -25,6 +25,19 @@ Per startare local ftp:
   stopftp
   
   
+Cancellare messaggi dopo lettura: usa opzione &delete=true nel ftp endpoint uri.Questo setta GenericFileEndpoint.processStrategy = GenericFileDeleteProcessStrategy
+
+
+###########  TESTS    ###########
+
+FtpToJMSWithDynamicToTest.testPlacingOrders() 			 src/data => jms:incomingOrders => mock:incomingOrders poi verifica che mock:incomingOrders ha 1 message enqueued.
+
+FtpToJMSWithPropertyPlaceholderTest.testPlacingOrders()  come sopra ma col nome della destination queue (jms:incomingOrders) specificato in un property file /src/test/resources/rider-test.properties
+
+Per eseguirli:    "mvn test"
+
+
+
 
    
 

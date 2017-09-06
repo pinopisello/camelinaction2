@@ -1,0 +1,20 @@
+camel-maven-plugin usa src/main/resources/META-INF/spring/camel-context.xml per configurate CamelContext e relative routes in Spring
+ed inviare file:src/data in ActiveMQ jms:incomingOrders
+
+
+Per lanciare esempio: 'mvn camel:run'  
+
+Vedi http://camel.apache.org/camel-maven-plugin.html
+
+
+La definizione del CamelContextFactoryBean che impementa <camelConext> e' in <artifactId>camel-spring</artifactId> in META-INF/spring.handlers
+
+
+##########   TESTS  ###############
+
+SpringFtpToJMSWithPropertyPlaceholderTest         Lancia SpringContext da camelinaction/SpringFtpToJMSWithPropertyPlaceholderTest.xml.Il CamelContext efinito,  che copia files da file:src/data => jms:incomingOrders => mock:incomingOrders e poi verifica che  mock:incomingOrders ha un message enqueued.
+SpringFtpToJMSWithSpringPropertyPlaceholderTest   come sopra ma con jms:incomingOrders indicata nel property file src/test/resources/rider-test.properties
+
+Lancia tests con 'mvn test'
+
+

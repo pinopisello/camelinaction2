@@ -30,7 +30,7 @@ public class FtpToJMSWithProcessorExample {
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
-                from("ftp://localhost/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT/orders?username=glocon&password=Pippo3791&stepwise=false") 
+                from("ftp://localhost/Miei/Applicativi/apache-activemq-5.14-SNAPSHOT/orders?username=glocon&password=Pippo3791&delete=false&move=.done") 
                 .process(new Processor() {                    
                     public void process(Exchange exchange) throws Exception {
                         System.out.println("We just downloaded: " + exchange.getIn().getHeader("CamelFileName"));
@@ -39,7 +39,9 @@ public class FtpToJMSWithProcessorExample {
                 .to("jms:queue:incomingOrders");
             }
         });
-
+        //context.getEndpoint(uri)
+        
+        
         // start the route and let it do its work
         context.start();
         Thread.sleep(100000);

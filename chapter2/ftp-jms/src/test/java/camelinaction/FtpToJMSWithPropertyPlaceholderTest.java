@@ -21,9 +21,8 @@ public class FtpToJMSWithPropertyPlaceholderTest extends CamelTestSupport {
         
         // connect to embedded ActiveMQ JMS broker
         ConnectionFactory connectionFactory = 
-            new ActiveMQConnectionFactory("vm://localhost");
-        camelContext.addComponent("jms",
-            JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+            new ActiveMQConnectionFactory("tcp://localhost:61616");
+        camelContext.addComponent("jms",  JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
         // setup the properties component to use the test file
         PropertiesComponent prop = camelContext.getComponent("properties", PropertiesComponent.class);
