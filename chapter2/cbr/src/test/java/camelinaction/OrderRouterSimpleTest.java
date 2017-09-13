@@ -19,9 +19,7 @@ public class OrderRouterSimpleTest extends CamelTestSupport {
         // connect to embedded ActiveMQ JMS broker
         ConnectionFactory connectionFactory = 
             new ActiveMQConnectionFactory("vm://localhost");
-        camelContext.addComponent("jms",
-            JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
-        
+        camelContext.addComponent("jms",JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));      
         return camelContext;
     }
     

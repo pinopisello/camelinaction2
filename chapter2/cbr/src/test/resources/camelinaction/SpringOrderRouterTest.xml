@@ -10,17 +10,17 @@
   <bean id="jms" class="org.apache.camel.component.jms.JmsComponent">
     <property name="connectionFactory">
       <bean class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="vm://localhost"/>
+        <property name="brokerURL" value="tcp://localhost:61616"/>
       </bean>
     </property>
   </bean>
 
  <camelContext trace="true" id="camel" xmlns="http://camel.apache.org/schema/spring">
   <route>
-   <from uri="file:src/data?noop=true" />
+   <from uri="file:src/data_full?delete=true" />
    <to uri="jms:incomingOrders" />
   </route>
-
+<!-- 
   <route>
    <from uri="jms:incomingOrders" />
    <choice>
@@ -46,6 +46,7 @@
    <log message="Received CSV order: ${header.CamelFileName}"/>
    <to uri="mock:csv" />
   </route>
+   -->
  </camelContext>
 
 </beans>

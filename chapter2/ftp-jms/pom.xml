@@ -106,7 +106,7 @@
 				<version>2.20</version>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
-					<forkCount>0</forkCount>
+					<forkCount>0</forkCount>  <!-- Permette di debuggare in eclipse -->
 				</configuration>
 			</plugin>
 

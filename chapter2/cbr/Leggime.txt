@@ -1,0 +1,61 @@
+Content-Based Router from Camel
+
+
+Tutti esempi sono implementati come mvn tests.
+
+Si puo' forzare "mvn test" ad eseguire 1 solo test specificando "-Dtest=classe_test_da_eseguire"
+
+Questo perche SurefirePlugin [che e' @Mojo( name = "test", defaultPhase = LifecyclePhase.TEST] ha field "test" annotato  @Parameter( property = "test" )
+
+Tale valore e' poi usato in TestListResolver( Collection<String> included, Collection<String> excluded ) per eseguire SOLO classe_test_da_eseguire!!
+
+
+#############   OrderRouterSimpleTest   ###########
+Sposta files da file:src/data vs jms:xmlOrders o jms:csvOrders dipendentemente dalla file extension.
+NON USA SPRING !!
+
+1)copia file:src/data  =>  "jms:incomingOrders"
+
+2)sposta:
+  messaggi con header CamelFileName finisce '.xml' => "jms:xmlOrders"
+  messaggi con header CamelFileName finisce '.cvs' => "jms:csvOrders"
+
+3)sposta:
+
+jms:xmlOrders => mock:xml
+jms:csvOrders => mock:cvs
+
+Allafine verifica che mock:xml e  mock:cvs contengono 1 messaggio.
+
+La selezione e' fatta con .choice() .. .when(header("CamelFileName").endsWith(".xml")) in RouteBuilder
+
+
+mvn test -Dtest=OrderRouterTest
+
+
+#############   SpringOrderRouterTest   ###########
+
+Come sopra ma usa Spring e la conf e' in /src/test/resources/camelinaction/SpringOrderRouterTest.xml
+
+La selezione e' fatta con:
+
+   <choice>
+    <when>
+     <simple> 
+     
+     dove simple e' una regex.
+     
+mvn test -Dtest=SpringOrderRouterTest
+
+
+
+
+     
+     
+
+
+
+
+
+
+

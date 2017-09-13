@@ -14,7 +14,7 @@
   <bean id="jms" class="org.apache.camel.component.jms.JmsComponent">
     <property name="connectionFactory">
       <bean class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value=tcp://localhost:61616"/>
+        <property name="brokerURL" value="tcp://localhost:61616"/>
       </bean>
     </property>
   </bean>
@@ -23,7 +23,7 @@
  <util:properties id="properties" location="classpath:rider-test.properties"/> 
 
  <camelContext trace="true" id="camel" xmlns="http://camel.apache.org/schema/spring">
-
+  
   <endpoint id="myDest" uri="jms:${myDest}"/>     
   
   <route>

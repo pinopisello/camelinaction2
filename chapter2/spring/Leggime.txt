@@ -13,8 +13,10 @@ La definizione del CamelContextFactoryBean che impementa <camelConext> e' in <ar
 ##########   TESTS  ###############
 
 SpringFtpToJMSWithPropertyPlaceholderTest         Lancia SpringContext da camelinaction/SpringFtpToJMSWithPropertyPlaceholderTest.xml.Il CamelContext efinito,  che copia files da file:src/data => jms:incomingOrders => mock:incomingOrders e poi verifica che  mock:incomingOrders ha un message enqueued.
+											        <propertyPlaceholder> permette di usare sintassi <to uri="jms:{{myDest}}" />
 SpringFtpToJMSWithSpringPropertyPlaceholderTest   come sopra ma con jms:incomingOrders indicata nel property file src/test/resources/rider-test.properties
-
+													 <util:properties  permette di usare sintassi <endpoint id="myDest" uri="jms:${myDest}"/>
+	
 Lancia tests con 'mvn test'
 
 
